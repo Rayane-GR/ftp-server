@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>تحميل التطبيق — AppJet Share</title>
+    <meta name="description" content="حمّل تطبيق AppJet Share لأجهزة Android وiPhone وWindows." />
+    <meta name="theme-color" content="#050b16" />
+    <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="aurora" aria-hidden="true">
+      <span class="blob blob-a"></span>
+      <span class="blob blob-b"></span>
+      <span class="blob blob-c"></span>
+    </div>
+
+    <header class="topbar">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" stroke-linecap="round" />
+          </svg>
+        </span>
+        <span class="brand-text"><strong>AppJet Share</strong><small>مشاركة ملفات عالمية</small></span>
+      </a>
+      <a class="btn btn-ghost" href="/" style="margin-inline-start:auto">الرئيسية</a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1>تحميل التطبيق</h1>
+        <p class="lead">
+          اختر جهازك ثم اضغط زر التحميل. جميع ملفات التثبيت تُنزَّل من هذا الخادم العالمي عبر HTTPS، وتتصل
+          تلقائيًا بنفس النطاق <code id="server-host"></code>.
+        </p>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>الملفات المتاحة</h2>
+          <p>لن يبدأ أي تنزيل تلقائيًا — التحميل يبدأ فقط عند ضغطك على الزر.</p>
+        </div>
+        <div class="device-list" id="all-downloads">
+          <div class="skeleton"></div>
+          <div class="skeleton"></div>
+          <div class="skeleton"></div>
+        </div>
+      </section>
+
+      <section class="features">
+        <article class="feature">
+          <h3>Android · APK</h3>
+          <p>ثبّت الملف مباشرة بعد السماح بالتثبيت من مصادر موثوقة في إعدادات الهاتف.</p>
+        </article>
+        <article class="feature">
+          <h3>iPhone · Safari</h3>
+          <p>افتح الصفحة في Safari ثم «مشاركة» → «إضافة إلى الشاشة الرئيسية». هذا مسار التوزيع المعتمد من Apple لتطبيقات الويب، ويعمل على iPhone 18 Pro.</p>
+        </article>
+        <article class="feature">
+          <h3>Windows · EXE</h3>
+          <p>شغّل الملف مباشرة على Windows 10/11 (64-bit), وسيفتح واجهة التطبيق المتصلة بالخادم العالمي.</p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span>AppJet Share · خادم مشاركة ملفات عالمي</span>
+        <span class="footer-links"><a href="/">الرئيسية</a><a href="/api/downloads">بيانات الملفات</a></span>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const host = document.getElementById('server-host');
+        if (host) host.textContent = location.origin;
+      });
+    </script>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
