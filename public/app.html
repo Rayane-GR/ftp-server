@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>AppJet Share</title>
+    <meta name="theme-color" content="#050b16" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="AppJet Share" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="aurora" aria-hidden="true">
+      <span class="blob blob-a"></span>
+      <span class="blob blob-b"></span>
+    </div>
+
+    <header class="topbar">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" stroke-linecap="round" />
+          </svg>
+        </span>
+        <span class="brand-text"><strong>AppJet Share</strong><small>تطبيق الويب المعتمد</small></span>
+      </a>
+      <span class="pill" style="margin-inline-start:auto">
+        <span class="dot" aria-hidden="true"></span>
+        <span id="origin-label">جارٍ التحقق…</span>
+      </span>
+    </header>
+
+    <main>
+      <section class="panel">
+        <div class="panel-head">
+          <h2>رفع ملف ومشاركته عالميًا</h2>
+          <p>هذه شاشة التطبيق المثبّت على iPhone وAndroid — تعمل بنفس الروابط العالمية.</p>
+        </div>
+        <form id="upload-form" class="uploader" enctype="multipart/form-data">
+          <label class="dropzone" id="dropzone" for="file-input" tabindex="0">
+            <input id="file-input" name="file" type="file" hidden />
+            <span class="dz-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                <path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" stroke-linecap="round" />
+              </svg>
+            </span>
+            <span class="dz-title">اختر ملفًا من جهازك</span>
+            <span class="dz-sub" id="picked-file" hidden></span>
+          </label>
+          <div class="options">
+            <label class="field">
+              <span>صلاحية الرابط</span>
+              <select id="expires" name="expires">
+                <option value="24h">24 ساعة</option>
+                <option value="7d" selected>7 أيام</option>
+                <option value="30d">30 يومًا</option>
+                <option value="never">بدون انتهاء</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>كلمة مرور (اختياري)</span>
+              <input id="password" name="password" type="password" autocomplete="new-password" />
+            </label>
+          </div>
+          <div class="progress" id="progress" hidden>
+            <div class="bar"><span id="bar-fill"></span></div>
+            <span class="progress-text" id="progress-text">0%</span>
+          </div>
+          <button class="btn btn-primary btn-block" id="upload-btn" type="submit">رفع وإنشاء رابط</button>
+        </form>
+
+        <div class="result" id="result" hidden>
+          <div class="result-head">
+            <span class="check">✓</span>
+            <div><strong id="result-title"></strong><p id="result-meta"></p></div>
+          </div>
+          <div class="copy-row">
+            <input id="result-url" type="text" readonly aria-label="رابط المشاركة" />
+            <button class="btn btn-ghost" type="button" id="copy-btn">نسخ</button>
+            <a class="btn btn-ghost" id="open-link" href="#">فتح</a>
+          </div>
+          <p class="hint" id="delete-hint"></p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head row">
+          <h2 style="margin:0">ملفاتي على الخادم</h2>
+          <button class="btn btn-ghost btn-sm" id="refresh-files" type="button">تحديث</button>
+        </div>
+        <div class="grid" id="files-grid"><div class="skeleton"></div></div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
