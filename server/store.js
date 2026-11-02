@@ -36,10 +36,27 @@ function scheduleFlush() {
   return flushing;
 }
 
+let flushSeq = 0;
+let flushChain = Promise.resolve();
+
+/**
+ * Atomically persist metadata. Flushes are serialised and each temp file name
+ * is unique, otherwise two concurrent flushes can rename the same temp path
+ * and crash the process with ENOENT.
+ */
 function flush() {
+  flushSeq += 1;
+  const tmp = path.join(DATA_DIR, `.files.${process.pid}.${flushSeq}.tmp`);
   const payload = JSON.stringify(state, null, 2);
-  const tmp = path.join(DATA_DIR, `.files.${process.pid}.${Date.now()}.tmp`);
-  return fsp.writeFile(tmp, payload, 'utf8').then(() => fsp.rename(tmp, META_FILE));
+  flushChain = flushChain
+    .catch(() => {})
+    .then(() => fsp.writeFile(tmp, payload, 'utf8'))
+    .then(() => fsp.rename(tmp, META_FILE))
+    .catch(async (err) => {
+      await fsp.rm(tmp, { force: true }).catch(() => {});
+      console.error('[store] فشل حفظ بيانات الملفات:', err.message);
+    });
+  return flushChain;
 }
 
 function newId() {
