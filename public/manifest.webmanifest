@@ -1,0 +1,24 @@
+{
+  "name": "AppJet Share — مشاركة ملفات عالمية",
+  "short_name": "AppJet Share",
+  "description": "ارفع الملفات وشاركها بروابط عالمية عبر HTTPS من أي جهاز.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/app",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#050b16",
+  "theme_color": "#050b16",
+  "categories": ["productivity", "utilities"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ],
+  "shortcuts": [
+    { "name": "رفع ملف", "url": "/#upload" },
+    { "name": "الملفات", "url": "/#files" }
+  ]
+}
