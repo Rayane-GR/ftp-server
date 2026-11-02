@@ -61,6 +61,7 @@ test('file sharing server', async (t) => {
   child.stderr.on('data', (d) => logs.push(d.toString()));
 
   t.after(() => {
+    if (logs.length) console.error('CHILD LOGS:', logs.join(''));
     child.kill('SIGTERM');
     fs.rmSync(dataDir, { recursive: true, force: true });
   });
