@@ -316,7 +316,9 @@ async function loadBuilds() {
     const badge = $(`[data-badge="${b.device}"]`);
     if (!badge) return;
     if (b.available) {
-      badge.textContent = `${b.version || ''} · ${formatBytes(b.size || 0)}`.trim();
+      // iOS ships as an install-from-site PWA (no file), so a byte size would read as "0 bytes".
+      const size = b.file && b.size ? formatBytes(b.size) : 'تثبيت من الموقع';
+      badge.textContent = `${b.version || ''} · ${size}`.trim();
       badge.classList.add('ready');
     } else {
       badge.textContent = 'غير متاح الآن';
