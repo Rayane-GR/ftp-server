@@ -1,9 +1,10 @@
 {
-  "generatedAt": "2026-11-02T09:05:21.393Z",
-  "server": "https://spqkqbkiyp.dev.onappjet.com",
+  "generatedAt": "2026-11-02T09:05:56.912Z",
   "version": "1.0.0",
+  "server": "https://spqkqbkiyp.dev.onappjet.com",
   "builds": [
     {
+      "device": "android",
       "platform": "android",
       "label": "Android (APK)",
       "file": "AppJetShare-Android.apk",
@@ -13,6 +14,7 @@
       "requires": "Android 7.0 أو أحدث"
     },
     {
+      "device": "windows",
       "platform": "windows",
       "label": "Windows (EXE)",
       "file": "AppJetShare-Windows.exe",
@@ -22,6 +24,7 @@
       "requires": "Windows 10/11 (64-bit)"
     },
     {
+      "device": "ios",
       "platform": "ios",
       "label": "iPhone / iPad (PWA)",
       "file": "",
