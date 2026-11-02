@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>AppJet Share — مشاركة ملفات عالمية آمنة</title>
+    <meta
+      name="description"
+      content="ارفع ملفاتك واحصل على رابط عالمي مباشر يعمل من أي دولة وأي جهاز عبر HTTPS. تطبيقات Android وiPhone وWindows."
+    />
+    <meta name="theme-color" content="#050b16" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="AppJet Share" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="aurora" aria-hidden="true">
+      <span class="blob blob-a"></span>
+      <span class="blob blob-b"></span>
+      <span class="blob blob-c"></span>
+    </div>
+
+    <header class="topbar">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" stroke-linecap="round" />
+          </svg>
+        </span>
+        <span class="brand-text">
+          <strong>AppJet Share</strong>
+          <small>مشاركة ملفات عالمية</small>
+        </span>
+      </a>
+
+      <nav class="topnav">
+        <a class="nav-link" href="/download">التطبيقات</a>
+        <a class="nav-link" href="#files">الملفات</a>
+        <a class="nav-link" href="/api/health" target="_blank" rel="noopener">حالة الخادم</a>
+      </nav>
+
+      <button class="btn btn-download" type="button" data-open-download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <path d="M12 4v10m0 0l-4-4m4 4l4-4" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M5 18h14" stroke-linecap="round" />
+        </svg>
+        <span>تحميل التطبيق</span>
+      </button>
+    </header>
+
+    <main>
+      <section class="hero">
+        <p class="pill">
+          <span class="dot" aria-hidden="true"></span>
+          <span id="origin-label">جارٍ التحقق من الرابط العالمي…</span>
+        </p>
+        <h1>
+          شارك ملفاتك مع
+          <span class="grad">العالم كله</span>
+          برابط واحد
+        </h1>
+        <p class="lead">
+          خادم مشاركة ملفات حقيقي يعمل عبر <strong>HTTPS</strong> على عنوان عام — لا Localhost ولا شبكة
+          محلية. ارفع الملف، احصل على رابط مباشر، وشاركه من أي دولة وأي جهاز.
+        </p>
+
+        <div class="hero-actions">
+          <button class="btn btn-primary" type="button" data-open-download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke-linecap="round" />
+            </svg>
+            تحميل التطبيق
+          </button>
+          <a class="btn btn-ghost" href="#upload">رفع ملف الآن</a>
+        </div>
+
+        <ul class="trust">
+          <li><span class="ok">✓</span> رابط عالمي لكل ملف</li>
+          <li><span class="ok">✓</span> تشفير TLS من المتصفح للخادم</li>
+          <li><span class="ok">✓</span> كلمة مرور اختيارية وصلاحية زمنية</li>
+        </ul>
+      </section>
+
+      <section class="panel" id="upload">
+        <div class="panel-head">
+          <h2>ارفع ملفًا</h2>
+          <p>الحد الأقصى للملف الواحد: <span id="max-size">—</span></p>
+        </div>
+
+        <form id="upload-form" class="uploader" enctype="multipart/form-data">
+          <label class="dropzone" id="dropzone" for="file-input" tabindex="0">
+            <input id="file-input" name="file" type="file" hidden />
+            <span class="dz-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                <path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" stroke-linecap="round" />
+              </svg>
+            </span>
+            <span class="dz-title">اسحب الملف هنا أو اضغط للاختيار</span>
+            <span class="dz-sub">أي نوع ملف — صور، فيديو، مستندات، أرشيفات</span>
+            <span class="dz-file" id="picked-file" hidden></span>
+          </label>
+
+          <div class="options">
+            <label class="field">
+              <span>صلاحية الرابط</span>
+              <select id="expires" name="expires">
+                <option value="24h">24 ساعة</option>
+                <option value="7d" selected>7 أيام</option>
+                <option value="30d">30 يومًا</option>
+                <option value="never">بدون انتهاء</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>كلمة مرور (اختياري)</span>
+              <input id="password" name="password" type="password" autocomplete="new-password" placeholder="اتركها فارغة لرابط مفتوح" />
+            </label>
+          </div>
+
+          <div class="progress" id="progress" hidden>
+            <div class="bar"><span id="bar-fill"></span></div>
+            <span class="progress-text" id="progress-text">0%</span>
+          </div>
+
+          <button class="btn btn-primary btn-block" id="upload-btn" type="submit">
+            رفع وإنشاء رابط عالمي
+          </button>
+        </form>
+
+        <div class="result" id="result" hidden>
+          <div class="result-head">
+            <span class="check" aria-hidden="true">✓</span>
+            <div>
+              <strong id="result-title">تم الرفع بنجاح</strong>
+              <p id="result-meta"></p>
+            </div>
+          </div>
+          <div class="copy-row">
+            <input id="result-url" type="text" readonly aria-label="رابط المشاركة" />
+            <button class="btn btn-ghost" type="button" id="copy-btn">نسخ الرابط</button>
+            <a class="btn btn-ghost" id="open-link" href="#" target="_blank" rel="noopener">فتح</a>
+          </div>
+          <p class="hint" id="delete-hint"></p>
+        </div>
+      </section>
+
+      <section class="panel" id="files">
+        <div class="panel-head row">
+          <div>
+            <h2>أحدث الملفات المرفوعة</h2>
+            <p>روابط عامة جاهزة للمشاركة من أي جهاز متصل بالإنترنت.</p>
+          </div>
+          <button class="btn btn-ghost btn-sm" id="refresh-files" type="button">تحديث</button>
+        </div>
+        <div class="grid" id="files-grid">
+          <div class="skeleton"></div>
+          <div class="skeleton"></div>
+          <div class="skeleton"></div>
+        </div>
+      </section>
+
+      <section class="features">
+        <article class="feature">
+          <h3>HTTPS + نقل آمن</h3>
+          <p>كل الاتصالات مشفّرة عبر TLS. للرفع الجماعي على السيرفر ندعم SFTP/FTPS عبر قناة مستقلة عن الويب.</p>
+        </article>
+        <article class="feature">
+          <h3>رابط عالمي مباشر</h3>
+          <p>كل ملف يحصل على رابط مباشر على نطاق عام، ويعمل مع مشاركة الواتساب أو البريد أو أي تطبيق.</p>
+        </article>
+        <article class="feature">
+          <h3>تطبيقات لكل جهاز</h3>
+          <p>Android (APK)، iPhone (تثبيت من الموقع)، وWindows (EXE) — جميعها تتصل بهذا الخادم العالمي.</p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <span>AppJet Share · خادم مشاركة ملفات عالمي</span>
+        <span class="footer-links">
+          <a href="/api/health" target="_blank" rel="noopener">/api/health</a>
+          <a href="/download">التطبيقات</a>
+          <button type="button" class="linklike" data-open-download>تحميل التطبيق</button>
+        </span>
+      </div>
+    </footer>
+
+    <!-- نافذة اختيار الجهاز -->
+    <div class="modal" id="download-modal" hidden>
+      <div class="modal-backdrop" data-close-download></div>
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="dl-title">
+        <header class="modal-head">
+          <div>
+            <h2 id="dl-title">تحميل التطبيق</h2>
+            <p>اختر نوع جهازك أولًا — لن يبدأ أي تنزيل تلقائيًا.</p>
+          </div>
+          <button class="icon-btn" type="button" aria-label="إغلاق" data-close-download>✕</button>
+        </header>
+
+        <ol class="step-bar">
+          <li class="active"><span>1</span> اختر الجهاز</li>
+          <li><span>2</span> اقرأ المتطلبات</li>
+          <li><span>3</span> اضغط تحميل</li>
+        </ol>
+
+        <div class="device-list" id="device-list">
+          <article class="device" data-device="android" tabindex="0" role="button" aria-pressed="false">
+            <span class="device-icon android" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 9h12v8a2 2 0 0 1-2 2h-1v2h-2v-2h-2v2H9v-2H8a2 2 0 0 1-2-2V9Zm12.5-2H5.5A5.5 5.5 0 0 1 8.2 3.2L7 1.9l.9-.9 1.6 1.6a6.6 6.6 0 0 1 5 0L16.1 1l.9.9-1.2 1.3A5.5 5.5 0 0 1 18.5 7ZM9 4.6a.7.7 0 1 0 0 1.4.7.7 0 0 0 0-1.4Zm6 0a.7.7 0 1 0 0 1.4.7.7 0 0 0 0-1.4Z"/></svg>
+            </span>
+            <div class="device-body">
+              <h3>Android</h3>
+              <p>ملف APK موقّع للتثبيت المباشر</p>
+              <span class="badge" data-badge="android">جارٍ التحميل…</span>
+            </div>
+            <span class="device-check" aria-hidden="true">✓</span>
+          </article>
+
+          <article class="device" data-device="ios" tabindex="0" role="button" aria-pressed="false">
+            <span class="device-icon ios" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.7c0-2.2 1.8-3.3 1.9-3.4-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.7.8-3.4.8-.7 0-1.8-.8-3-.8-1.5 0-2.9.9-3.7 2.2-1.6 2.7-.4 6.8 1.1 9 .8 1.1 1.6 2.3 2.8 2.3 1.1 0 1.5-.7 2.9-.7s1.7.7 2.9.7 2-1.1 2.7-2.2c.9-1.2 1.2-2.4 1.2-2.5-.1 0-2.2-.9-2.2-3.7ZM14.3 5.4c.6-.7 1-1.7.9-2.7-.9 0-2 .6-2.6 1.3-.6.7-1 1.7-.9 2.6 1 .1 2-.5 2.6-1.2Z"/></svg>
+            </span>
+            <div class="device-body">
+              <h3>iPhone</h3>
+              <p>تثبيت معتمد عبر Safari — يعمل على iPhone 18 Pro وأحدث إصدارات iOS</p>
+              <span class="badge" data-badge="ios">تثبيت من الموقع</span>
+            </div>
+            <span class="device-check" aria-hidden="true">✓</span>
+          </article>
+
+          <article class="device" data-device="windows" tabindex="0" role="button" aria-pressed="false">
+            <span class="device-icon windows" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5 10.5 4.4v6.9H3V5.5Zm8.7-1.2L21 3v8.3h-9.3V4.3ZM3 12.6h7.5v7L3 18.5v-5.9Zm8.7 0H21V21l-9.3-1.3v-7.1Z"/></svg>
+            </span>
+            <div class="device-body">
+              <h3>Windows</h3>
+              <p>تطبيق سطح مكتب بصيغة EXE (Windows 10/11، 64-bit)</p>
+              <span class="badge" data-badge="windows">جارٍ التحميل…</span>
+            </div>
+            <span class="device-check" aria-hidden="true">✓</span>
+          </article>
+        </div>
+
+        <div class="device-detail" id="device-detail" hidden>
+          <h3 id="detail-title"></h3>
+          <p id="detail-desc"></p>
+          <ul id="detail-req"></ul>
+          <div class="detail-actions">
+            <a class="btn btn-primary" id="detail-download" href="#" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path d="M12 4v10m0 0l-4-4m4 4l4-4" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M5 18h14" stroke-linecap="round" />
+              </svg>
+              <span id="detail-download-label">تحميل</span>
+            </a>
+            <button class="btn btn-ghost" type="button" data-close-download>لاحقًا</button>
+          </div>
+          <dl class="file-facts" id="detail-facts"></dl>
+        </div>
+
+        <p class="modal-note">
+          جميع الملفات تُنزَّل من هذا الخادم العالمي عبر HTTPS، وتتصل التطبيقات بنفس النطاق تلقائيًا.
+        </p>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
