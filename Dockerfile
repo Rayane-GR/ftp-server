@@ -18,7 +18,7 @@ ENV NODE_ENV=production \
 # patched OS packages in the final stage (openssl/libssl live here, not in Node's bundle)
 RUN apk upgrade --no-cache \
  && apk add --no-cache --virtual .run-deps tini \
- && rm -rf /var/cache/apk/*
+ && mkdir -p /var/cache/apk
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY package.json ./
