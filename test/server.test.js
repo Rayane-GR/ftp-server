@@ -226,4 +226,44 @@ test('file sharing server', async (t) => {
     assert.ok(Array.isArray(body.builds));
     assert.ok(body.baseUrl.startsWith('http'));
   });
+
+  await t.test('real installers exist, are downloadable and match their checksums', async () => {
+    const res = await fetch(`${baseUrl}/api/downloads`);
+    const body = await res.json();
+
+    const byDevice = new Map(body.builds.map((b) => [b.device, b]));
+    for (const device of ['android', 'windows', 'ios']) {
+      assert.ok(byDevice.has(device), `catalog is missing the ${device} entry`);
+    }
+
+    for (const device of ['android', 'windows']) {
+      const build = byDevice.get(device);
+      assert.equal(build.available, true, `${device} installer file must be present`);
+      assert.ok(build.size > 1000, `${device} installer must not be a stub`);
+      assert.match(build.sha256, /^[0-9a-f]{64}$/);
+
+      // The file really is served over the public URL, not a 404 placeholder.
+      const dl = await fetch(build.url);
+      assert.equal(dl.status, 200, `${device} installer must be downloadable`);
+      const bytes = Buffer.from(await dl.arrayBuffer());
+      assert.equal(bytes.length, build.size);
+      const digest = crypto.createHash('sha256').update(bytes).digest('hex');
+      assert.equal(digest, build.sha256, `${device} checksum must match the served bytes`);
+
+      if (device === 'android') {
+        // ZIP local file header "PK\x03\x04" indicates a real APK container.
+        assert.equal(bytes.subarray(0, 2).toString('latin1'), 'PK');
+        assert.ok(bytes.includes(Buffer.from('AndroidManifest.xml')), 'APK must contain a manifest');
+      } else {
+        // "MZ" magic marks a real Windows PE executable.
+        assert.equal(bytes.subarray(0, 2).toString('latin1'), 'MZ');
+      }
+    }
+
+    // The iOS card is a PWA install path, so it links to the app shell instead of a file.
+    const ios = byDevice.get('ios');
+    assert.equal(ios.file, '');
+    const shell = await fetch(`${baseUrl}/app`);
+    assert.equal(shell.status, 200);
+  });
 });
