@@ -58,10 +58,14 @@ function verifyDownloadToken(id, token) {
  * ------------------------------------------------------------------ */
 function baseUrl(req) {
   if (process.env.PUBLIC_BASE_URL) return process.env.PUBLIC_BASE_URL.replace(/\/+$/, '');
-  const proto = (req.headers['x-forwarded-proto'] || req.protocol || 'http').split(',')[0].trim();
   const host = (req.headers['x-forwarded-host'] || req.headers.host || `localhost:${PORT}`)
     .split(',')[0]
     .trim();
+  const forwarded = (req.headers['x-forwarded-proto'] || '').split(',')[0].trim();
+  const localHost = /^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/i.test(host);
+  // Behind a TLS-terminating proxy the forwarding header may be missing entirely,
+  // so any non-local public host is assumed to be served over HTTPS.
+  const proto = forwarded || (localHost ? req.protocol || 'http' : 'https');
   return `${proto}://${host}`;
 }
 
