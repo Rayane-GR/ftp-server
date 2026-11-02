@@ -15,7 +15,7 @@
     "build:icons": "node scripts/make-icons.js"
   },
   "dependencies": {
-    "express": "4.21.2",
-    "multer": "2.0.2"
+    "express": "^5.3.0",
+    "multer": "^2.5.0"
   }
 }
